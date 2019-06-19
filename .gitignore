@@ -22,9 +22,6 @@ local.properties
 # User-specific configurations
 *.iml
 
-# Local configuration file (sdk path, etc)
-local.properties
-
 # Log Files
 *.log
 
@@ -53,9 +50,6 @@ vcs.xml
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Version control
-vcs.xml
 
 # lint
 lint/intermediates/
