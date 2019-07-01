@@ -100,15 +100,11 @@ object Utils {
      * @return - множественная форма, соответствующая количеству
      */
     fun getPluralForm(pluralForms: String, count: Int): String {
-        val forms = pluralForms.split(";").dropLastWhile { it.isEmpty() }.toTypedArray()
-        if (forms.size < 3) {
-            return forms[0]
-        }
-
-        val countString = count.toString()
-        when (countString[countString.length - 1]) {
-            '1' -> return forms[0]
-            '2', '3', '4' -> if (countString[0] != '1') {
+        val forms = pluralForms.split(";")
+        when (count % 10) {
+            1 -> if (count % 100 != 11)
+                return forms[0]
+            in 2..4 -> if (count % 100 !in 12..14) {
                 return forms[1]
             }
         }

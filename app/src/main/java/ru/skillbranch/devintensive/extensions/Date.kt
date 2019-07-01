@@ -38,7 +38,7 @@ fun Date.humanizeDiff(date: Date = Date()): String {
 
 private fun humanizeFuture(diff: Long): String {
     /**
-    0с - 1с "прямо сейчас"
+    0с - 1с "только что"
     1с - 45с "через несколько секунд"
     45с - 75с "через минуту"
     75с - 45мин "через N минуту;минуты;минут"
@@ -50,7 +50,7 @@ private fun humanizeFuture(diff: Long): String {
      */
 
     return when (diff) {
-        in 0..(1 * SECOND) -> "прямо сейчас"
+        in 0..(1 * SECOND) -> "только что"
         in (1 * SECOND)..(45 * SECOND) -> "через несколько секунд"
         in (45 * SECOND)..(75 * SECOND) -> "через минуту"
         in (75 * SECOND)..(45 * MINUTE) -> {
