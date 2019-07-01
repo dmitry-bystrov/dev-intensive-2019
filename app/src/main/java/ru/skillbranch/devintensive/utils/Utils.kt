@@ -92,4 +92,28 @@ object Utils {
 
         return mapping.joinToString(separator = "")
     }
+
+    /**
+     * @param pluralForms - три варианта множественной формы существительного, разделённых
+     *                    точкой с запятой (пример: огурец;огурца;огурцов)
+     * @param count       - количество
+     * @return - множественная форма, соответствующая количеству
+     */
+    fun getPluralForm(pluralForms: String, count: Int): String {
+        val forms = pluralForms.split(";").dropLastWhile { it.isEmpty() }.toTypedArray()
+        if (forms.size < 3) {
+            return forms[0]
+        }
+
+        val countString = count.toString()
+        when (countString[countString.length - 1]) {
+            '1' -> return forms[0]
+            '2', '3', '4' -> if (countString[0] != '1') {
+                return forms[1]
+            }
+        }
+
+        return forms[2]
+    }
+
 }
