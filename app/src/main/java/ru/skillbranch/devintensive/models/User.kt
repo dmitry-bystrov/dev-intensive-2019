@@ -30,10 +30,27 @@ data class User(
             val parts = Utils.parseFullName(fullName)
             return User("$lastId", parts.first, parts.second)
         }
+
+        fun makeUser(
+            firstName: String?,
+            lastName: String?,
+            avatar: String?,
+            rating: Int = 0,
+            respect: Int = 0,
+            lastVisit: Date? = Date(),
+            isOnline: Boolean = false
+        ): User {
+            lastId++
+            return User("$lastId", firstName, lastName, avatar, rating, respect, lastVisit, isOnline)
+        }
+
+        fun resetCounter() {
+            lastId = -1
+        }
     }
 
     class Builder {
-        private lateinit var id: String
+        private var id: String? = null
         private var firstName: String? = null
         private var lastName: String? = null
         private var avatar: String? = null
@@ -51,6 +68,7 @@ data class User(
         fun lastVisit(lastVisit: Date?) = apply { this.lastVisit = lastVisit }
         fun isOnline(isOnline: Boolean) = apply { this.isOnline = isOnline }
 
-        fun build() = User(id, firstName, lastName, avatar, rating, respect, lastVisit, isOnline)
+        fun build() = if (id == null) makeUser(firstName, lastName, avatar, rating, respect, lastVisit, isOnline)
+        else User(id!!, firstName, lastName, avatar, rating, respect, lastVisit, isOnline)
     }
 }
