@@ -10,8 +10,8 @@ object Utils {
     }
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-        val initials = (if (firstName.isNullOrBlank()) "" else firstName.substring(0, 1)) +
-                if (lastName.isNullOrBlank()) "" else lastName.substring(0, 1)
+        val initials = (if (firstName.isNullOrBlank()) "" else firstName.trim().substring(0, 1)) +
+                if (lastName.isNullOrBlank()) "" else lastName.trim().substring(0, 1)
 
         return (if (initials.isEmpty()) null else initials.toUpperCase())
     }
