@@ -2,7 +2,7 @@ package ru.skillbranch.devintensive.utils
 
 object Utils {
     fun parseFullName(fullName: String?): Pair<String?, String?> {
-        val parts: List<String>? = fullName?.split(" ")
+        val parts: List<String>? = fullName?.split(" ")?.filter { !it.isBlank() }
         val firstName = parts?.getOrNull(0)
         val lastName = parts?.getOrNull(1)
         return (if (firstName.isNullOrEmpty()) null else firstName) to
@@ -46,7 +46,7 @@ object Utils {
                 'ц' -> 'c'
                 'ч' -> "ch"
                 'ш' -> "sh"
-                'щ' -> "sh"
+                'щ' -> "sh'"
                 'ъ' -> ""
                 'ы' -> 'i'
                 'ь' -> ""
@@ -79,7 +79,7 @@ object Utils {
                 'Ц' -> 'C'
                 'Ч' -> "Ch"
                 'Ш' -> "Sh"
-                'Щ' -> "Sh"
+                'Щ' -> "Sh'"
                 'Ъ' -> ""
                 'Ы' -> 'I'
                 'Ь' -> ""

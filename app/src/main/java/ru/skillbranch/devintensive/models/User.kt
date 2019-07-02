@@ -14,7 +14,7 @@ data class User(
     var isOnline: Boolean = false
 ) {
 
-    constructor(id: String, firstName: String?, lastName: String?, lastVisit: Date? = Date()) : this(
+    constructor(id: String, firstName: String? = null, lastName: String? = null, lastVisit: Date? = Date()) : this(
         id,
         firstName,
         lastName,
