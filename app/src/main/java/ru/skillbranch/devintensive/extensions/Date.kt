@@ -112,4 +112,15 @@ private fun calcDiffAmount(diff: Long, timeInterval: Long): Int {
     return result.roundToInt()
 }
 
-enum class TimeUnits { SECOND, MINUTE, HOUR, DAY }
+enum class TimeUnits { SECOND, MINUTE, HOUR, DAY;
+
+    fun plural(value: Int) : String {
+        return when(this)
+        {
+            SECOND -> "$value ${Utils.getPluralForm("секунду;секунды;секунд", value)}"
+            MINUTE -> "$value ${Utils.getPluralForm("минуту;минуты;минут", value)}"
+            HOUR -> "$value ${Utils.getPluralForm("час;часа;часов", value)}"
+            DAY -> "$value ${Utils.getPluralForm("день;дня;дней", value)}"
+        }
+    }
+}
