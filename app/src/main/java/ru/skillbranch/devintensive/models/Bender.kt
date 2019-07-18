@@ -12,10 +12,13 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
+        if (question != Question.IDLE && !question.validation.matches(answer)) {
+            return "${question.hint}\n${question.question}" to status.color
+        }
+
         val nextQuestion = question.nextQuestion()
         val nextStatus = status.nextStatus()
-
-        val text = if (question.answers.contains(answer) || question == Question.IDLE) {
+        val text = if (question.answers.contains(answer.toLowerCase()) || question == Question.IDLE) {
             question = nextQuestion
             if (nextQuestion == Question.IDLE) {
                 "Отлично - ты справился\nНа этом все, вопросов больше нет"
@@ -51,23 +54,53 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         }
     }
 
-    enum class Question(val question: String, val answers: List<String>) {
-        NAME("Как меня зовут?", listOf("бендер", "bender")) {
+    enum class Question(val question: String, val answers: List<String>, val hint: String, val validation: Regex) {
+        NAME(
+            "Как меня зовут?",
+            listOf("бендер", "bender"),
+            "Имя должно начинаться с заглавной буквы",
+            Regex("[A-ZА-Я]\\w+")
+        ) {
             override fun nextQuestion(): Question = PROFESSION
         },
-        PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
+        PROFESSION(
+            "Назови мою профессию?",
+            listOf("сгибальщик", "bender"),
+            "Профессия должна начинаться со строчной буквы",
+            Regex("[a-zа-я]\\w+")
+        ) {
             override fun nextQuestion(): Question = MATERIAL
         },
-        MATERIAL("Из чего я сделан?", listOf("металл", "дерево", "metal", "iron", "wood")) {
+        MATERIAL(
+            "Из чего я сделан?",
+            listOf("металл", "дерево", "metal", "iron", "wood"),
+            "Материал не должен содержать цифр",
+            Regex("\\D+")
+        ) {
             override fun nextQuestion(): Question = BDAY
         },
-        BDAY("Когда меня создали?", listOf("2993")) {
+        BDAY(
+            "Когда меня создали?",
+            listOf("2993"),
+            "Год моего рождения должен содержать только цифры",
+            Regex("\\d+")
+        ) {
             override fun nextQuestion(): Question = SERIAL
         },
-        SERIAL("Мой серийный номер?", listOf("2716057")) {
+        SERIAL(
+            "Мой серийный номер?",
+            listOf("2716057"),
+            "Серийный номер содержит только цифры, и их 7",
+            Regex("\\d{7}")
+        ) {
             override fun nextQuestion(): Question = IDLE
         },
-        IDLE("На этом все, вопросов больше нет", listOf()) {
+        IDLE(
+            "На этом все, вопросов больше нет",
+            listOf(),
+            "",
+            Regex("\\w+")
+        ) {
             override fun nextQuestion(): Question = IDLE
         };
 
