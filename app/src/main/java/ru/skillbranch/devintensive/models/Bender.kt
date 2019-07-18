@@ -16,9 +16,13 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             return "${question.hint}\n${question.question}" to status.color
         }
 
+        if (question == Question.IDLE) {
+            return "На этом все, вопросов больше нет" to status.color
+        }
+
         val nextQuestion = question.nextQuestion()
         val nextStatus = status.nextStatus()
-        val text = if (question.answers.contains(answer.toLowerCase()) || question == Question.IDLE) {
+        val text = if (question.answers.contains(answer.toLowerCase())) {
             question = nextQuestion
             if (nextQuestion == Question.IDLE) {
                 "Отлично - ты справился\nНа этом все, вопросов больше нет"
@@ -59,7 +63,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             "Как меня зовут?",
             listOf("бендер", "bender"),
             "Имя должно начинаться с заглавной буквы",
-            Regex("[A-ZА-Я]\\w+")
+            Regex("^[A-ZА-Я].*")
         ) {
             override fun nextQuestion(): Question = PROFESSION
         },
@@ -67,7 +71,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             "Назови мою профессию?",
             listOf("сгибальщик", "bender"),
             "Профессия должна начинаться со строчной буквы",
-            Regex("[a-zа-я]\\w+")
+            Regex("^[a-zа-я].*")
         ) {
             override fun nextQuestion(): Question = MATERIAL
         },
