@@ -1,5 +1,10 @@
 <resources>
 
+    <style name="AppTheme.SplashTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:statusBarColor">#EFEFEF</item>
+    </style>
+
     <style name="Profile" />
 
     <style name="Profile.EditText" parent="Profile">
