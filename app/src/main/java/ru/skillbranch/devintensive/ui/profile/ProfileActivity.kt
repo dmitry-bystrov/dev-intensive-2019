@@ -4,6 +4,8 @@ import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -24,6 +26,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var viewModel: ProfileViewModel
     private var isEditMode = false
     private lateinit var viewFields: Map<String, TextView>
+    private val validationExpression =
+        Regex("(https://|www.|https://www.|)+github.com/+((?!enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join)\\w+)")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -75,6 +79,10 @@ class ProfileActivity : AppCompatActivity() {
 
         btn_edit.setOnClickListener {
             if (isEditMode) {
+                if (!validateRepoUrl(et_repository.text.toString())) {
+                    et_repository.text.clear()
+                }
+
                 saveProfileInfo()
             }
 
@@ -85,7 +93,25 @@ class ProfileActivity : AppCompatActivity() {
         btn_switch_theme.setOnClickListener {
             viewModel.switchTheme()
         }
+
+        et_repository.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                wr_repository.error = if (validateRepoUrl(s.toString())) {
+                    ""
+                } else {
+                    "Невалидный адрес репозитория"
+                }
+            }
+        })
     }
+
+    private fun validateRepoUrl(repoUrl: String) = repoUrl.isEmpty() || validationExpression.matches(repoUrl)
 
     private fun showCurrentMode(editMode: Boolean) {
         val info = viewFields.filter { setOf("firstName", "lastName", "about", "repository").contains(it.key) }
