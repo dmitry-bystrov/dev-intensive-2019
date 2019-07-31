@@ -121,6 +121,8 @@ class ProfileActivity : AppCompatActivity() {
                 } else {
                     "Невалидный адрес репозитория"
                 }
+
+                wr_repository.isErrorEnabled = wr_repository.error != null
             }
         })
     }
