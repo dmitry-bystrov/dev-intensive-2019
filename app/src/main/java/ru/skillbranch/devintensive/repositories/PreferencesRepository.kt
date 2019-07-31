@@ -1,4 +1,4 @@
-package ru.skillbranch.devintensive.repository
+package ru.skillbranch.devintensive.repositories
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
