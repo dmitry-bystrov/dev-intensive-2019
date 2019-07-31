@@ -128,6 +128,7 @@ class ProfileActivity : AppCompatActivity() {
                     wr_repository.isErrorEnabled = true
                     wr_repository.error = "Невалидный адрес репозитория"
                     nested_scroll.fullScroll(View.FOCUS_DOWN)
+                    et_repository.requestFocus()
                 }
             }
         })
