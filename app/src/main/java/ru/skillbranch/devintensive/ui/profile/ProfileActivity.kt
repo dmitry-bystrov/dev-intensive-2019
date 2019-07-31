@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +40,8 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
         initViewModel()
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         Log.d("M_ProfileActivity", "onCreate")
     }
 
@@ -116,13 +119,16 @@ class ProfileActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                wr_repository.error = if (validateRepoUrl(s.toString())) {
-                    null
-                } else {
-                    "Невалидный адрес репозитория"
-                }
+                val isRepoUrlValid = validateRepoUrl(s.toString())
 
-                wr_repository.isErrorEnabled = wr_repository.error != null
+                if (isRepoUrlValid) {
+                    wr_repository.isErrorEnabled = false
+                    wr_repository.error = null
+                } else {
+                    wr_repository.isErrorEnabled = true
+                    wr_repository.error = "Невалидный адрес репозитория"
+                    nested_scroll.fullScroll(View.FOCUS_DOWN)
+                }
             }
         })
     }
