@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.profile.ProfileActivity">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ru.skillbranch.devintensive.ui.custom.AspectRatioImageView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@drawable/profile_bg"
-            app:aspectRatio="1.78" />
+            android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/spacing_normal_16">
-
-            <ImageButton
-                android:id="@+id/btn_switch_theme"
-                android:layout_width="@dimen/btn_round_size_40"
-                android:layout_height="@dimen/btn_round_size_40"
-                android:layout_marginTop="36dp"
-                android:layout_marginEnd="@dimen/spacing_huge_32"
-                android:layout_toStartOf="@id/iv_avatar"
-                android:background="@drawable/btn_round_bg"
-                android:src="@drawable/ic_switch_day_night"
-                tools:ignore="ContentDescription" />
-
-            <ru.skillbranch.devintensive.ui.custom.CircleImageView
-                android:id="@+id/iv_avatar"
-                android:layout_width="@dimen/avatar_round_size"
-                android:layout_height="@dimen/avatar_round_size"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/avatar_default"
-                tools:ignore="ContentDescription" />
-
-            <ImageButton
-                android:id="@+id/btn_edit"
-                android:layout_width="@dimen/btn_round_size_40"
-                android:layout_height="@dimen/btn_round_size_40"
-                android:layout_marginStart="@dimen/spacing_huge_32"
-                android:layout_marginTop="36dp"
-                android:layout_toEndOf="@id/iv_avatar"
-                android:background="@drawable/btn_round_bg"
-                android:src="@drawable/ic_edit_black_24dp"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/tv_nick_name"
-                style="@style/Profile.Header.Nickname"
-                android:layout_width="wrap_content"
+            <ru.skillbranch.devintensive.ui.custom.AspectRatioImageView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iv_avatar"
-                android:layout_centerHorizontal="true"
-                tools:text="John Doe" />
+                android:scaleType="centerCrop"
+                android:src="@drawable/profile_bg"
+                app:aspectRatio="1.78" />
 
-            <TextView
-                android:id="@+id/tv_rank"
-                style="@style/Profile.Header.Rank"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_nick_name"
-                android:layout_centerHorizontal="true"
-                tools:text="Junior Android Developer" />
-        </RelativeLayout>
-    </FrameLayout>
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/spacing_normal_16">
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nested_scroll"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/btn_switch_theme"
+                    android:layout_width="@dimen/btn_round_size_40"
+                    android:layout_height="@dimen/btn_round_size_40"
+                    android:layout_marginTop="36dp"
+                    android:layout_marginEnd="@dimen/spacing_huge_32"
+                    android:layout_toStartOf="@id/iv_avatar"
+                    android:background="@drawable/btn_round_bg"
+                    android:src="@drawable/ic_switch_day_night"
+                    tools:ignore="ContentDescription" />
+
+                <ru.skillbranch.devintensive.ui.custom.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="@dimen/avatar_round_size"
+                    android:layout_height="@dimen/avatar_round_size"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/avatar_default"
+                    tools:ignore="ContentDescription" />
+
+                <ImageButton
+                    android:id="@+id/btn_edit"
+                    android:layout_width="@dimen/btn_round_size_40"
+                    android:layout_height="@dimen/btn_round_size_40"
+                    android:layout_marginStart="@dimen/spacing_huge_32"
+                    android:layout_marginTop="36dp"
+                    android:layout_toEndOf="@id/iv_avatar"
+                    android:background="@drawable/btn_round_bg"
+                    android:src="@drawable/ic_edit_black_24dp"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tv_nick_name"
+                    style="@style/Profile.Header.Nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_avatar"
+                    android:layout_centerHorizontal="true"
+                    tools:text="John Doe" />
+
+                <TextView
+                    android:id="@+id/tv_rank"
+                    style="@style/Profile.Header.Rank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_nick_name"
+                    android:layout_centerHorizontal="true"
+                    tools:text="Junior Android Developer" />
+            </RelativeLayout>
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -281,5 +281,5 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
