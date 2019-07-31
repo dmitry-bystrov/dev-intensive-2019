@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -16,7 +17,10 @@ import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.activity_profile.*
 import ru.skillbranch.devintensive.R
 import ru.skillbranch.devintensive.models.Profile
+import ru.skillbranch.devintensive.ui.custom.TextDrawable
+import ru.skillbranch.devintensive.utils.Utils
 import ru.skillbranch.devintensive.viewmodels.ProfileViewModel
+
 
 class ProfileActivity : AppCompatActivity() {
     companion object {
@@ -27,7 +31,7 @@ class ProfileActivity : AppCompatActivity() {
     private var isEditMode = false
     private lateinit var viewFields: Map<String, TextView>
     private val validationExpression =
-        Regex("(https://|www.|https://www.|)+github.com/+((?!enterprise|features|topics|collections|trending|events|marketplace|pricing|nonprofit|customer-stories|security|login|join)\\w+)")
+        Regex("(https://|www.|https://www.|)+github.com/(?!enterprise\\b|features\\b|topics\\b|collections\\b|trending\\b|events\\b|marketplace\\b|pricing\\b|nonprofit\\b|customerstories\\b|security\\b|login\\b|join\\b)[\\w-]+/?")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
@@ -58,6 +62,16 @@ class ProfileActivity : AppCompatActivity() {
         profile.toMap().also {
             for ((k, v) in viewFields) {
                 v.text = it[k].toString()
+            }
+        }
+
+        val avatarText = Utils.toInitials(profile.firstName, profile.lastName)
+        val avatarSize = resources.getDimensionPixelSize(R.dimen.avatar_round_size)
+        avatarText?.let {
+            if (it.isNotEmpty()) {
+                val themeAccentColor = TypedValue()
+                theme.resolveAttribute(R.attr.colorAccent, themeAccentColor, true)
+                iv_avatar.setImageDrawable(TextDrawable(themeAccentColor.data, it, avatarSize))
             }
         }
     }
@@ -103,7 +117,7 @@ class ProfileActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {
                 wr_repository.error = if (validateRepoUrl(s.toString())) {
-                    ""
+                    null
                 } else {
                     "Невалидный адрес репозитория"
                 }
@@ -111,7 +125,8 @@ class ProfileActivity : AppCompatActivity() {
         })
     }
 
-    private fun validateRepoUrl(repoUrl: String) = repoUrl.isEmpty() || validationExpression.matches(repoUrl)
+    private fun validateRepoUrl(repoUrl: String) =
+        repoUrl.isEmpty() || validationExpression.matches(repoUrl.replace("-", ""))
 
     private fun showCurrentMode(editMode: Boolean) {
         val info = viewFields.filter { setOf("firstName", "lastName", "about", "repository").contains(it.key) }
