@@ -35,7 +35,6 @@ class ProfileActivity : AppCompatActivity() {
         Regex("(https://|www.|https://www.|)+github.com/(?!enterprise\\b|features\\b|topics\\b|collections\\b|trending\\b|events\\b|marketplace\\b|pricing\\b|nonprofit\\b|customerstories\\b|security\\b|login\\b|join\\b)[\\w-]+/?")
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         initViews(savedInstanceState)
@@ -45,9 +44,9 @@ class ProfileActivity : AppCompatActivity() {
         Log.d("M_ProfileActivity", "onCreate")
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState?.putBoolean(IS_EDIT_MODE, isEditMode)
+        outState.putBoolean(IS_EDIT_MODE, isEditMode)
     }
 
     private fun initViewModel() {
@@ -138,7 +137,14 @@ class ProfileActivity : AppCompatActivity() {
         repoUrl.isEmpty() || validationExpression.matches(repoUrl.replace("-", ""))
 
     private fun showCurrentMode(editMode: Boolean) {
-        val info = viewFields.filter { setOf("firstName", "lastName", "about", "repository").contains(it.key) }
+        val info = viewFields.filter {
+            setOf(
+                "firstName",
+                "lastName",
+                "about",
+                "repository"
+            ).contains(it.key)
+        }
         for ((_, v) in info) {
             v as EditText
             v.isFocusable = editMode

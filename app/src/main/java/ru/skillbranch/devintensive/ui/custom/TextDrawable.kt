@@ -3,7 +3,7 @@ package ru.skillbranch.devintensive.ui.custom
 import android.graphics.*
 import android.graphics.drawable.Drawable
 
-class TextDrawable(bgColor: Int = Color.GRAY, val text: String, size: Int) : Drawable() {
+class TextDrawable(bgColor: Int = Color.GRAY, private val text: String, size: Int) : Drawable() {
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
